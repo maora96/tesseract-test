@@ -7,6 +7,8 @@ export default function Profile() {
   const [reposCount, setReposCount] = useState(0);
   const [profile, setProfile] = useState({});
   const { params } = useRouteMatch();
+
+  // fetch individual member
   useEffect(() => {
     fetch(`https://api.github.com/users/${params.id}`)
       .then((res) => res.json())
@@ -16,6 +18,7 @@ export default function Profile() {
       });
   }, []);
 
+  // fetch their followers & count them
   useEffect(() => {
     fetch(`${profile.followers_url}`)
       .then((res) => res.json())
@@ -25,6 +28,7 @@ export default function Profile() {
       });
   }, [profile]);
 
+  //fetch their repos & count them
   useEffect(() => {
     fetch(`${profile.repos_url}`)
       .then((res) => res.json())
@@ -34,6 +38,7 @@ export default function Profile() {
       });
   }, [profile]);
 
+  // format date to follow dd/mm/yyy format
   const formatDate = (date) => {
     const unformatted = new Date(date);
     let year = unformatted.getFullYear();
